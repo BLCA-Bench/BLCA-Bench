@@ -1,1 +1,0 @@
-The clinical guidelines and epidemiology report used for question generation are identified below. Their full-text PDFs are not redistributed in this repository. Users should obtain the specified editions from the official publishers and comply with the applicable terms of use. The question-generation scripts accept locally supplied PDF files.
