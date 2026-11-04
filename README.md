@@ -90,7 +90,7 @@ $env:BLCA_API_URL = "API_URL"
 $env:BLCA_MODEL = "YOUR_MODEL_ID"
 ```
 
-Use `process_single_guide.py` to supply documents. For example, this command requests 10 draft questions from the epidemiology report:
+Users can obtain the required PDF files from official sources via `source/URLs_for_guidelines_and_epidemiological_report.md` and pass the local path to that file to `process_single_guide.py`. For example, the following command will generate 10 draft questions based on the epidemiological report:
 
 ```powershell
 python code/question_construction/process_single_guide.py "source/epidemiological_report/Cancer statistics, 2025.pdf" "epidemiology_report" 10
@@ -98,9 +98,9 @@ python code/question_construction/process_single_guide.py "source/epidemiologica
 
 The command makes API requests and saves constructed JSON files in `output/` relative to the working directory.
 
-`pdf_extract_and_generate.py` implements PDF extraction and question generation, while `pdf_extract_fallback.py` provides an alternative text-extraction utility. The batch PDF entry point and `--list` helper use `data/guides/`, so use the explicit PDF-path command above with this repository’s `source/` layout.
+`pdf_extract_and_generate.py` implements PDF extraction and question generation, while `pdf_extract_fallback.py` provides an alternative text-extraction utility. 
 
-`multiprocess_ehr.py` processes locally supplied clinical-case DOCX files from `data/ehrs/`, relative to the working directory, and writes constructed questions and intermediate files to `output/` and `intermediate/`.
+`multiprocess_ehr.py` processes locally supplied clinical-case DOCX files, relative to the working directory, and writes constructed questions and intermediate files to `output/` and `intermediate/`.
 
 ## Model evaluation
 
