@@ -17,12 +17,8 @@ BLCA-Bench/
 │       ├── clinical_cases.jsonl
 │       └── guidelines_and_epidemiology_report.jsonl
 ├── source/
-│   ├── guidelines/
-│   │   ├── AUA/            
-│   │   ├── EAU/                  
-│   │   └── NCCN/                
-│   └── epidemiological_report/
-│       └── Cancer statistics, 2025.pdf
+│   └── URLs_for_guidelines_and_epidemiological_report.md 
+│
 └── code/
     ├── QA_api.py                       # Model evaluation
     └── question_construction/
@@ -33,12 +29,12 @@ BLCA-Bench/
         └── requirements_generation.txt
 ```
 
-The root folder is shown as `BLCA-Bench/` for presentation. The PDF filenames inside the guideline folders are omitted above for readability.
+The root folder is shown as `BLCA-Bench/` for presentation.
 
 ## Repository contents
 
 * [submit_test_samples.jsonl](submit_test_samples.jsonl) contains **100 Chinese–English question pairs (200 records)** selected from the complete dataset, covering all three sources and all six domains. It provides a quick introduction to the dataset’s content and format.
-* [source/](source/) contains the PDF documents used for question construction: five guideline documents under `guidelines/AUA/`, `guidelines/EAU/` and `guidelines/NCCN/`, and *Cancer statistics, 2025* under `epidemiological_report/`.
+* [source/URLs_for_guidelines_and_epidemiological_report.md ](source/URLs_for_guidelines_and_epidemiological_report.md ) contains PDF links for question development. Users can follow these links to obtain the documents used to compile the BLCA-Bench dataset from the official websites of the corresponding guidelines and the epidemiological report.
 * [code/question_construction/](code/question_construction/) contains the source-processing and question-construction scripts. [code/QA_api.py](code/QA_api.py) contains the model-evaluation script.
 * [data/all_questions.jsonl](data/all_questions.jsonl) contains the complete BLCA-Bench question set.
 * [data/by_source/](data/by_source/) contains the same records grouped by source: medical examination question banks (**311 pairs**), clinical cases (**404 pairs**), and guidelines and the epidemiology report (**477 pairs**). These files partition the complete dataset; they are not additional questions.
@@ -58,8 +54,6 @@ The question files use UTF-8 JSON Lines (JSONL), with one JSON object per line. 
 * `options`: two to five answer options in their supplied order.
 * `answer`: the reference option letter.
 * `explanation`: the reference rationale.
-
-The physician-questionnaire records use a separate schema that includes `id` and `background`; they do not contain the main benchmark’s `category`, `domain` or `explanation` fields.
 
 ## Load the sample
 
@@ -96,13 +90,13 @@ $env:BLCA_API_URL = "API_URL"
 $env:BLCA_MODEL = "YOUR_MODEL_ID"
 ```
 
-Use `process_single_guide.py` to supply a PDF directly from `source/`. For example, this command requests 10 draft questions from the epidemiology report:
+Use `process_single_guide.py` to supply documents. For example, this command requests 10 draft questions from the epidemiology report:
 
 ```powershell
 python code/question_construction/process_single_guide.py "source/epidemiological_report/Cancer statistics, 2025.pdf" "epidemiology_report" 10
 ```
 
-The command makes API requests and saves generated JSON files in `output/` relative to the working directory.
+The command makes API requests and saves constructed JSON files in `output/` relative to the working directory.
 
 `pdf_extract_and_generate.py` implements PDF extraction and question generation, while `pdf_extract_fallback.py` provides an alternative text-extraction utility. The batch PDF entry point and `--list` helper use `data/guides/`, so use the explicit PDF-path command above with this repository’s `source/` layout.
 
